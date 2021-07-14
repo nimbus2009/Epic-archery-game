@@ -18,12 +18,12 @@ class PlayerArcher{
     
     display() {
 
-        if (keyIsDown(UP_ARROW) && this.a <= (-PI/2)+0.5) {
-            this.a -= 0.02;
+        if (keyIsDown(DOWN_ARROW) && this.a <= (-PI/2)+0.5) {
+            this.a += 0.02;
 
           }
-          if(keyIsDown(DOWN_ARROW) && this.a >= (-PI/2)-0.5){
-            this.a += 0.02;
+          if(keyIsDown(UP_ARROW) && this.a >= (-PI/2)-0.5){
+            this.a -= 0.02;
           }
 
           Matter.Body.setAngle(this.body,this.a);
