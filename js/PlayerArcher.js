@@ -18,11 +18,11 @@ class PlayerArcher{
     
     display() {
 
-        if (keyIsDown(RIGHT_ARROW) && this.a <= (-PI/2)+0.5) {
+        if (keyIsDown(UP_ARROW) && this.a <= (-PI/2)+0.5) {
             this.a += 0.02;
 
           }
-          if(keyIsDown(LEFT_ARROW) && this.a >= (-PI/2)-0.5){
+          if(keyIsDown(DOWN_ARROW) && this.a >= (-PI/2)-0.5){
             this.a -= 0.02;
           }
 
