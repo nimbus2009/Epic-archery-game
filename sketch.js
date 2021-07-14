@@ -10,6 +10,7 @@ var computer, computerBase;
 
 var arrow;
 
+var arrows=[];
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -54,10 +55,11 @@ function setup() {
   arrow=new playerArrow(
     345,
     playerBase.body.position.y - 180,
+    90,
     30,
-    10,
     -PI/32,
   );
+  //arrows.push(arrow);
 
   var vel = p5.Vector.fromAngle(playerArcher.angle);
   console.log(vel);
@@ -87,18 +89,30 @@ function draw() {
 
 
   //Display arrow();
-  arrow.display();
+  for(i=0;i<arrows.length;i++) {
+    arrows[i].display();
+  }
   
 }
 
 function keyPressed() {
-  //if Space (32) key is pressed call shoot function of playerArrow
-  if(keyCode === 32){
-    //Call shoot() function and pass angle of playerArcher
-    arrow.shoot(playerArcher.body.angle-(-PI*(3/6)));
-
+  if(keyCode==32) {
+    var anything=new playerArrow(
+      345,
+      playerBase.body.position.y - 180,
+      45,
+      10,
+      -PI/32,
+    );
+    Matter.Body.setAngle(anything.body,playerArcher.body.angle+PI/2);
+    arrows.push(anything);
   }
 }
 
-
-
+function keyReleased() {
+  if(keyCode === 32){
+    arrows[arrows.length-1].shoot(playerArcher.body.angle-(-PI*(3/6)));
+  }
+  //arrows.pop();
+  //arrows.splice(2,2);
+}
