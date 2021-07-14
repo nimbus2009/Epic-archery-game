@@ -1,40 +1,40 @@
-class PlayerArcher{
-    constructor(x,y,width,height,angle) {
-        this.x=x;
-        this.y=y;
-        this.w=width;
-        this.h=height;
-        this.a=angle;
-
-        this.image=loadImage("./assets/computerArcher.png");
-
-        this.body=Bodies.rectangle(this.x,this.y,this.w,this.h,{
-            isStatic:true,
-
-        });
-        Matter.Body.setAngle(this.body,this.a);
-        World.add(world,this.body);
+class PlayerArcher {
+    constructor(x, y, width, height) {
+      const options = {
+        isStatic: true
+      };
+  
+      this.body = Matter.Bodies.rectangle(x, y, width, height, options);
+      this.width = width;
+      this.height = height;
+      //this.collapse = false;
+      this.image = loadImage("./assets/playerArcher.png");
+  
+      World.add(world, this.body);
+  
+      Matter.Body.setAngle(this.body, -PI / 2); // -90 degree
     }
-    
+  
     display() {
-
-        if (keyIsDown(DOWN_ARROW) && this.a <= (-PI/2)+0.5) {
-            this.a += 0.02;
-
-          }
-          if(keyIsDown(UP_ARROW) && this.a >= (-PI/2)-0.5){
-            this.a -= 0.02;
-          }
-
-          Matter.Body.setAngle(this.body,this.a);
-
-        var pos = this.body.position;
-        var angle = this.a;
-        push();
-        translate(pos.x-50, pos.y);
-        rotate(angle);
-        imageMode(CENTER);
-        image(this.image, 0, 0+50, this.w, this.h);
-        pop();
+      var pos = this.body.position;
+      var angle = this.body.angle;
+      
+      if (keyIsDown(DOWN_ARROW) && angle < -1.2) {
+        angle += 0.01;
+        Matter.Body.setAngle(this.body, angle);
+      }
+  
+      if (keyIsDown(UP_ARROW) && angle > -1.9) {
+        angle -= 0.01;
+        Matter.Body.setAngle(this.body, angle);
+      }
+      
+      push();
+      translate(pos.x-50, pos.y);
+      rotate(angle);
+      imageMode(CENTER);
+      image(this.image, 0, 0+50, this.width, this.height);
+      pop();
     }
-}
+  }
+  
