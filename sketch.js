@@ -9,12 +9,13 @@ var palyer, playerBase, playerArcher;
 var computer, computerBase, computerArcher;
 var playerArrows = [];
 var computerArrows = [];
+var backgroundImg;
 //
 //Declare the varibales to add 3 life for player and computerplayer
 
 function preload() {
   //Load Image of background
-
+  backgroundImg=loadImage("assets/background.gif")
 
 }
 
