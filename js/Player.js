@@ -28,4 +28,11 @@ class Player {
     image(this.image, 0, 0, this.width, this.height);
     pop();
   }
+
+  life() {
+    fill(this.life1);
+    rect(200,50,75,25);
+    rect(275,50,75,25);
+    rect(350,50,75,25);
+  }
 }

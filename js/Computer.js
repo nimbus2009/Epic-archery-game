@@ -10,7 +10,11 @@ class Computer {
     this.height = height;
     this.image = loadImage("./assets/player.png");
 
-        World.add(world, this.body);
+    World.add(world, this.body);
+
+    this.life1="green";
+    this.life2="green";
+    this.life2="green";
   }
 
    display() {
@@ -22,5 +26,12 @@ class Computer {
     imageMode(CENTER);
     image(this.image, 0, 0, this.width, this.height);
     pop();
+  }
+
+  life() {
+    fill(this.life1);
+    rect(width-200,50,75,25);
+    rect(width-275,50,75,25);
+    rect(width-350,50,75,25);
   }
 }

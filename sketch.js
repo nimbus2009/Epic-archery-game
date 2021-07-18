@@ -8,12 +8,15 @@ var canvas;
 var palyer, playerBase;
 var computer, computerBase;
 
-//Declare an array for arrows playerArrows = [ ]
+//Declare an array for arrows playerArrows = [ ];
 var playerArrows = [];
 var computerArrows = []
 var arrow;
 
 var statusScore="Welcome player!";
+
+let playerLife=3;
+let computerLife=3;
 
 function preload(){
   backgroundImg = loadImage("assets/background.gif");
@@ -62,10 +65,7 @@ function setup() {
 function draw() {
   background(backgroundImg);
 
-  
-
   Engine.update(engine);
-
   // Title
   fill("#FFFF");
   textAlign("center");
@@ -84,6 +84,9 @@ function draw() {
   computerArcher.display();
 
   handlePlayerArrowCollision();
+
+  computer.life();
+  player.life();
 
  // Use for loop to display arrow using showArrow() function
  for (var i = 0; i < playerArrows.length; i++) {
