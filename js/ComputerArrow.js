@@ -16,6 +16,7 @@ class ComputerArrow {
     World.add(world, this.body);
   }
 
+
   shoot(archerAngle) {
     this.velocity = p5.Vector.fromAngle(archerAngle + PI / 2);
     this.velocity.mult(32);

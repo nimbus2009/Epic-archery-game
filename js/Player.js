@@ -10,8 +10,11 @@ class Player {
     this.height = height;
     this.image = loadImage("./assets/player.png");
 
+
     World.add(world, this.body);
   }
+
+ 
 
  
   display() {

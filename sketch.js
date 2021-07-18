@@ -5,20 +5,18 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var canvas;
-var palyer, playerBase;
-var computer, computerBase;
-
-//Declare an array for arrows playerArrows = [ ]
+var palyer, playerBase, playerArcher;
+var computer, computerBase, computerArcher;
 var playerArrows = [];
-var computerArrows = []
-var arrow;
+var computerArrows = [];
+//
+//Declare the varibales to add 3 life for player and computerplayer
 
-var statusScore="Welcome player!";
+function preload() {
+  //Load Image of background
 
-function preload(){
-  backgroundImg = loadImage("assets/background.gif")
+
 }
-
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight);
@@ -47,22 +45,18 @@ function setup() {
     50,
     180
   );
+
   computerArcher = new ComputerArcher(
-    width - 340,
+    width - 350,
     computerBase.body.position.y - 180,
     120,
     120
   );
-  //Function to manage computer Arrows
-  handleComputerArcher(); 
-
-    textSize(5);
+  handleComputerArcher();
 }
 
 function draw() {
   background(backgroundImg);
-
-  
 
   Engine.update(engine);
 
@@ -72,64 +66,55 @@ function draw() {
   textSize(40);
   text("EPIC ARCHERY", width / 2, 100);
 
- 
+  for (var i = 0; i < playerArrows.length; i++) {
+    showArrows(i, playerArrows);
+  }
+
   playerBase.display();
   player.display();
   
+  playerArcher.display();
+  handlePlayerArrowCollision();
+
+  for (var i = 0; i < computerArrows.length; i++) {
+    showArrows(i, computerArrows);
+  }
+  //call Player.life and computerplayer.life
+
 
   computerBase.display();
   computer.display();
   
-  playerArcher.display();
   computerArcher.display();
-
-  handlePlayerArrowCollision();
-
- // Use for loop to display arrow using showArrow() function
- for (var i = 0; i < playerArrows.length; i++) {
-  showArrows(i, playerArrows);
-}
-
-for (var i = 0; i < computerArrows.length; i++) {
-  showArrows(i, computerArrows);
-}
-
-
-  //Call functions to detect collision for player and computer
   handleComputerArrowCollision();
 }
 
 function keyPressed() {
-
-  if(keyCode === 32){
-    // create an arrow object and add into an array ; set its angle same as angle of playerArcher
+  if (keyCode === 32) {
     var posX = playerArcher.body.position.x;
     var posY = playerArcher.body.position.y;
-    var angle = playerArcher.body.angle+PI/2;
+    var angle = playerArcher.body.angle;
 
-    var arrow = new PlayerArrow(posX, posY, 100, 10);
+    var arrow = new PlayerArrow(posX, posY, 100, 10, angle);
 
     arrow.trajectory = [];
     Matter.Body.setAngle(arrow.body, angle);
     playerArrows.push(arrow);
-
   }
 }
 
-function keyReleased () {
-
-  if(keyCode === 32){
-    //call shoot() function for each arrow in an array playerArrows
+function keyReleased() {
+  if (keyCode === 32) {
     if (playerArrows.length) {
-      var angle = playerArcher.body.angle+PI/2;
+      var angle = playerArcher.body.angle;
       playerArrows[playerArrows.length - 1].shoot(angle);
     }
   }
-
 }
-//Display arrow and Tranjectory
+
 function showArrows(index, arrows) {
   arrows[index].display();
+ 
 }
 
 function handleComputerArcher() {
@@ -164,57 +149,56 @@ function handleComputerArcher() {
 }
 
 function handlePlayerArrowCollision() {
-// Write code to detect collision between player arrow and opponent
-  textSize(20);
   for (var i = 0; i < playerArrows.length; i++) {
-      if(playerArrows[i]!==undefined) {
-        var collision=Matter.SAT.collides(playerArrows[i].body,computerArcher.body);
-        var collision2=Matter.SAT.collides(playerArrows[i].body,computer.body);
-        if(collision.collided) {
-          var messages=["A close miss! Half a point!","Better luck next time. But still, half points ar yours!","Tip: Aim to the opponent's body for a full point. You get half point.","It's not bull's eye, but okay! You get half points..."];
-          console.log(random(messages));
-          statusScore=random(messages);
+    var baseCollision = Matter.SAT.collides(
+      playerArrows[i].body,
+      computerBase.body
+    );
 
-          World.remove(world,playerArrows[i].body);
-          playerArrows.splice(i,1);
-        }
-        if(collision2.collided) {
-          statusScore="You scored! Full 1 point!";
-          if(playerArrows[i]!==undefined) {
-            World.remove(world,playerArrows[i].body);
-            playerArrows.splice(i,1);
-          }
-        }
-      }
-  }
-  fill("black");
-  text("Status: " + statusScore,width/2,height-50);
-}
+    var archerCollision = Matter.SAT.collides(
+      playerArrows[i].body,
+      computerArcher.body
+    );
 
-function handleComputerArrowCollision() {
-  //Write code to detect collision between computer arrow and opponent
-  // Write code to detect collision between player arrow and opponent
-  textSize(20);
-  for (var i = 0; i < computerArrows.length; i++) {
-      if(computerArrows[i]!==undefined) {
-        var collision=Matter.SAT.collides(computerArrows[i].body,playerArcher.body);
-        var collision2=Matter.SAT.collides(computerArrows[i].body,player.body);
-        if(collision.collided) {
-          var messages=["A close miss! Half a point!","Better luck next time. But still, half points ar yours!","Tip: Aim to the opponent's body for a full point. You get half point.","It's not bull's eye, but okay! You get half points..."];
-          console.log(random(messages));
-          statusScore="Computer shot you!";
+    var computerCollision = Matter.SAT.collides(
+      playerArrows[i].body,
+      computer.body
+    );
 
-          World.remove(world,computerArrows[i].body);
-          computerArrows.splice(i,1);
-        }
-        if(collision2.collided) {
-          statusScore="Computer shot you!";
-          if(computerArrows[i]!==undefined) {
-            World.remove(world,computerArrows[i].body);
-            computerArrows.splice(i,1);
-          }
-        }
+    if (
+      baseCollision.collided ||
+      archerCollision.collided ||
+      computerCollision.collided
+    ) {
+      console.log("Player Arrow Collided")
     }
   }
 }
 
+function handleComputerArrowCollision() {
+  for (var i = 0; i < computerArrows.length; i++) {
+    var baseCollision = Matter.SAT.collides(
+      computerArrows[i].body,
+      playerBase.body
+    );
+
+    var archerCollision = Matter.SAT.collides(
+      computerArrows[i].body,
+      playerArcher.body
+    );
+
+    var playerCollision = Matter.SAT.collides(
+      computerArrows[i].body,
+      player.body
+    );
+
+    if (
+      baseCollision.collided ||
+      archerCollision.collided ||
+      playerCollision.collided
+    )
+    {
+      console.log("Computer Arrow Collided")
+    }
+  }
+}
