@@ -16,7 +16,7 @@ var arrow;
 var statusScore="Welcome player!";
 
 function preload(){
-  backgroundImg = loadImage("assets/background.gif")
+  backgroundImg = loadImage("assets/background.gif");
 }
 
 
