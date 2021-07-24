@@ -178,6 +178,8 @@ function handlePlayerArrowCollision() {
           console.log(random(messages));
           statusScore=random(messages);
 
+          computerLife-=0.5;
+
           World.remove(world,playerArrows[i].body);
           playerArrows.splice(i,1);
         }
@@ -186,7 +188,7 @@ function handlePlayerArrowCollision() {
           if(playerArrows[i]!==undefined) {
             World.remove(world,playerArrows[i].body);
             playerArrows.splice(i,1);
-
+            computerLife-=1;
           }
         }
       }
