@@ -32,7 +32,39 @@ class Player {
   life() {
     fill(this.life1);
     rect(200,50,75,25);
+    fill(this.life2);
     rect(275,50,75,25);
+    fill(this.life3);
     rect(350,50,75,25);
+    
+    if(playerLife==2) {
+      this.life3="red";
+    }
+    
+    if(playerLife==1) {
+      this.life3="red";
+      this.life2="red";
+    }
+    
+    if(playerLife==0) {
+      this.life3="red";
+      this.life2="red";
+      this.life1="red";
+    }
+
+    if(playerLife==2.5) {
+      this.life3="yellow";
+    }
+    
+    if(playerLife==1.5) {
+      this.life3="yellow";
+      this.life2="yellow";
+    }
+    
+    if(playerLife==0.5) {
+      this.life3="yellow";
+      this.life2="yellow";
+      this.life1="yellow";
+    }
   }
 }

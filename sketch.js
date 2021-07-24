@@ -186,6 +186,7 @@ function handlePlayerArrowCollision() {
           if(playerArrows[i]!==undefined) {
             World.remove(world,playerArrows[i].body);
             playerArrows.splice(i,1);
+
           }
         }
       }
@@ -205,7 +206,9 @@ function handleComputerArrowCollision() {
         if(collision.collided) {
           var messages=["A close miss! Half a point!","Better luck next time. But still, half points ar yours!","Tip: Aim to the opponent's body for a full point. You get half point.","It's not bull's eye, but okay! You get half points..."];
           console.log(random(messages));
-          statusScore="Computer shot you!";
+          //statusScore="Computer shot you!";
+
+          playerLife-=0.5;
 
           World.remove(world,computerArrows[i].body);
           computerArrows.splice(i,1);
@@ -215,6 +218,7 @@ function handleComputerArrowCollision() {
           if(computerArrows[i]!==undefined) {
             World.remove(world,computerArrows[i].body);
             computerArrows.splice(i,1);
+            playerLife-=1;
           }
         }
     }
